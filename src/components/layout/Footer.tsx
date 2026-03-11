@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,9 +9,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
-            <h2 className="text-xl font-semibold tracking-tighter text-gray-900 mb-4">
-              hanacards.
-            </h2>
+            <div className="relative h-16 w-40 mb-4 mix-blend-multiply">
+              <Image
+                src="/images/logo.png"
+                alt="Hana Cards Logo"
+                fill
+                className="object-contain object-left"
+              />
+            </div>
             <p className="text-gray-500 text-sm mb-6 max-w-sm">
               Minimalist greeting cards and thoughtful tabletop scenes curated
               for meaningful connections in Melbourne.
