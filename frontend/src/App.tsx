@@ -9,6 +9,7 @@ import Store from '@/pages/Store';
 import Cart from '@/pages/Cart';
 import Packs from '@/pages/Packs';
 import Services from '@/pages/Services';
+import ProductDetail from '@/pages/ProductDetail';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/packs" element={<Packs />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </main>
       <Footer />

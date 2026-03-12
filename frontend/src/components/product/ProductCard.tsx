@@ -1,10 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Product } from "@/data/products";
 import { useCartStore } from "@/store/cartStore";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, Check } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
@@ -12,6 +13,14 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
+  const [added, setAdded] = useState(false);
+
+  const handleAdd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    addItem(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
 
   return (
     <motion.div
@@ -39,14 +48,40 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Add to cart overlay button */}
         <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              addItem(product);
-            }}
-            className="w-full bg-white/95 backdrop-blur-sm text-gray-900 flex items-center justify-center space-x-2 py-3 rounded-md font-medium text-sm hover:bg-white shadow-lg transition-colors"
+            onClick={handleAdd}
+            className={`w-full flex items-center justify-center space-x-2 py-3 rounded-md font-medium text-sm shadow-lg transition-colors duration-300 ${
+              added
+                ? "bg-green-700 text-white"
+                : "bg-white/95 backdrop-blur-sm text-gray-900 hover:bg-white"
+            }`}
           >
-            <ShoppingBag className="h-4 w-4" />
-            <span>Add to Cart</span>
+            <AnimatePresence mode="wait">
+              {added ? (
+                <motion.span
+                  key="added"
+                  className="flex items-center space-x-2"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Check className="h-4 w-4" />
+                  <span>Added to Cart</span>
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="add"
+                  className="flex items-center space-x-2"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ShoppingBag className="h-4 w-4" />
+                  <span>Add to Cart</span>
+                </motion.span>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </Link>
