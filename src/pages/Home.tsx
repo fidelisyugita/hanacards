@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import ProductCard from "@/components/product/ProductCard";
 import { products } from "@/data/products";
 
@@ -24,13 +24,13 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              href="/store"
+              to="/store"
               className="bg-gray-900 text-white px-8 py-4 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors uppercase tracking-widest"
             >
               Shop Collection
             </Link>
             <Link
-              href="/about"
+              to="/about"
               className="bg-white text-gray-900 border border-gray-200 px-8 py-4 rounded-md text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors uppercase tracking-widest"
             >
               Our Story
@@ -52,7 +52,7 @@ export default function Home() {
               </p>
             </div>
             <Link
-              href="/store"
+              to="/store"
               className="hidden sm:block text-sm font-medium text-gray-900 hover:text-gray-500 transition-colors uppercase tracking-wider relative group"
             >
               View all
@@ -68,7 +68,7 @@ export default function Home() {
 
           <div className="mt-12 text-center sm:hidden">
             <Link
-              href="/store"
+              to="/store"
               className="inline-block bg-gray-900 text-white px-8 py-4 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors uppercase tracking-widest"
             >
               View all products

@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Product } from "@/data/products";
 import { useCartStore } from "@/store/cartStore";
@@ -21,24 +20,20 @@ export default function ProductCard({ product }: ProductCardProps) {
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <Link
-        href={`/product/${product.id}`}
+        to={`/product/${product.id}`}
         className="relative aspect-[4/5] w-full overflow-hidden bg-gray-100 rounded-lg mb-4 cursor-pointer"
       >
         {/* Primary Image */}
-        <Image
+        <img
           src={product.primaryImage}
           alt={product.name}
-          fill
-          className="object-cover transition-opacity duration-500 group-hover:opacity-0"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0"
         />
         {/* Hover Image */}
-        <Image
+        <img
           src={product.hoverImage}
           alt={`Alternate view of ${product.name}`}
-          fill
-          className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         />
 
         {/* Add to cart overlay button */}
@@ -58,7 +53,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <div className="flex flex-col space-y-1">
         <div className="flex justify-between items-start">
-          <Link href={`/product/${product.id}`}>
+          <Link to={`/product/${product.id}`}>
             <h3 className="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
               {product.name}
             </h3>

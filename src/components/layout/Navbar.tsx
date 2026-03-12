@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
+import { Link } from "react-router-dom";
 import { ShoppingBag, Menu } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useState, useEffect } from "react";
@@ -20,14 +19,12 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="flex items-center group">
+            <Link to="/" className="flex items-center group">
               <div className="relative h-12 w-32 md:h-14 md:w-36 transition-transform duration-300 group-hover:scale-105">
-                <Image
-                  src="/images/logo.png"
+                <img
+                  src="/images/logo.jpeg"
                   alt="Hana Cards Logo"
-                  fill
-                  className="object-contain"
-                  priority
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
               </div>
             </Link>
@@ -36,25 +33,25 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
             <Link
-              href="/"
+              to="/"
               className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
             >
               About
             </Link>
             <Link
-              href="/store"
+              to="/store"
               className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
             >
               Store
             </Link>
             <Link
-              href="/services"
+              to="/services"
               className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
             >
               Services
             </Link>
             <Link
-              href="/packs"
+              to="/packs"
               className="text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
             >
               Packs
@@ -64,7 +61,7 @@ export default function Navbar() {
           {/* Icons */}
           <div className="flex items-center space-x-6">
             <Link
-              href="/cart"
+              to="/cart"
               className="relative text-gray-900 hover:text-gray-600 transition-colors flex items-center group"
             >
               <ShoppingBag className="h-5 w-5 stroke-[1.5]" />

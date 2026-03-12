@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -10,11 +9,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
             <div className="relative h-16 w-40 mb-4 mix-blend-multiply">
-              <Image
-                src="/images/logo.png"
+              <img
+                src="/images/logo.jpeg"
                 alt="Hana Cards Logo"
-                fill
-                className="object-contain object-left"
+                className="absolute inset-0 w-full h-full object-contain object-left"
               />
             </div>
             <p className="text-gray-500 text-sm mb-6 max-w-sm">
@@ -44,7 +42,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  href="/store?category=friendship"
+                  to="/store?category=friendship"
                   className="text-gray-500 hover:text-gray-900 text-sm transition-colors"
                 >
                   Friendship
@@ -52,7 +50,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/store?category=love"
+                  to="/store?category=love"
                   className="text-gray-500 hover:text-gray-900 text-sm transition-colors"
                 >
                   Love
@@ -60,7 +58,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/store?category=birthday"
+                  to="/store?category=birthday"
                   className="text-gray-500 hover:text-gray-900 text-sm transition-colors"
                 >
                   Birthday
@@ -68,7 +66,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/packs"
+                  to="/packs"
                   className="text-gray-500 hover:text-gray-900 text-sm transition-colors"
                 >
                   Packs
@@ -96,13 +94,13 @@ export default function Footer() {
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <Link
-              href="#"
+              to="#"
               className="text-gray-400 hover:text-gray-900 text-xs transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href="#"
+              to="#"
               className="text-gray-400 hover:text-gray-900 text-xs transition-colors"
             >
               Terms of Service

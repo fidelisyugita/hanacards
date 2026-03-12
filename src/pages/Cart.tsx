@@ -1,8 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Minus, Plus, X, ShoppingBag } from "lucide-react";
 
 export default function Cart() {
@@ -22,7 +21,7 @@ export default function Cart() {
           cart yet.
         </p>
         <Link
-          href="/store"
+          to="/store"
           className="bg-gray-900 text-white px-8 py-4 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors uppercase tracking-widest"
         >
           Start Shopping
@@ -43,11 +42,10 @@ export default function Cart() {
           {items.map(({ product, quantity }) => (
             <div key={product.id} className="p-6 flex items-center space-x-6">
               <div className="relative h-32 w-24 flex-shrink-0 bg-gray-50 rounded-md overflow-hidden">
-                <Image
+                <img
                   src={product.primaryImage}
                   alt={product.name}
-                  fill
-                  className="object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
 
