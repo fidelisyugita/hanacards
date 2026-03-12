@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="md:col-span-2">
             <div className="relative h-16 w-40 mb-4 mix-blend-multiply">
               <img
-                src="/images/logo.jpeg"
+                src="/images/logo.png"
                 alt="Hana Cards Logo"
                 className="absolute inset-0 w-full h-full object-contain object-left"
               />
