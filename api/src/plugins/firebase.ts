@@ -1,6 +1,6 @@
 import fp from "fastify-plugin";
 import { FastifyPluginAsync } from "fastify";
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
 
 declare module "fastify" {
   interface FastifyInstance {

@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
 import { AuthUser } from "../types/index.js";
 
 declare module "fastify" {
@@ -10,7 +10,7 @@ declare module "fastify" {
 
 /**
  * Verifies Firebase ID token from Authorization header.
- * Attaches decoded user info to request.user
+ * Attaches decoded user info and DB role to request.user
  */
 export async function verifyToken(
   request: FastifyRequest,
@@ -26,13 +26,22 @@ export async function verifyToken(
 
   try {
     const decoded = await admin.auth().verifyIdToken(token);
+    
+    // Look up role in Database
+    const dbUser = await request.server.prisma.user.findUnique({
+      where: { uid: decoded.uid },
+      select: { role: true }
+    });
+
     request.user = {
       uid: decoded.uid,
       email: decoded.email,
-      isAdmin: decoded.admin === true,
+      role: dbUser?.role ?? "CUSTOMER", // default to CUSTOMER if not yet in DB
     };
-  } catch {
-    return reply.status(401).send({ message: "Invalid or expired token" });
+  } catch (err: any) {
+    console.error("Firebase verifyIdToken error:", err.message);
+    request.log.error(err);
+    return reply.status(401).send({ message: "Invalid or expired token", error: err.message });
   }
 }
 
@@ -44,7 +53,7 @@ export async function requireAdmin(
   request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> {
-  if (!request.user?.isAdmin) {
+  if (request.user?.role !== "ADMIN") {
     return reply.status(403).send({ message: "Admin access required" });
   }
 }

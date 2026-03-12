@@ -7,6 +7,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model User {
+  uid         String     @id // Firebase UID
+  email       String     @unique
+  displayName String?
+  role        Role       @default(CUSTOMER)
+  address     Json?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  cartItems   CartItem[]
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int
+  user      User    @relation(fields: [userId], references: [uid], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
 model Product {
   id           String      @id @default(cuid())
   name         String
@@ -20,6 +55,7 @@ model Product {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   orderItems   OrderItem[]
+  cartItems    CartItem[]
 }
 
 model Order {
@@ -41,12 +77,4 @@ model OrderItem {
   price     Float
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id])
-}
-
-enum OrderStatus {
-  PENDING
-  CONFIRMED
-  SHIPPED
-  DELIVERED
-  CANCELLED
 }

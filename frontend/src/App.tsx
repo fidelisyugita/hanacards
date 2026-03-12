@@ -11,9 +11,20 @@ import Packs from '@/pages/Packs';
 import Services from '@/pages/Services';
 import ProductDetail from '@/pages/ProductDetail';
 
+// Auth & Admin
+import { AuthProvider } from '@/context/AuthContext';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import AdminRoute from '@/components/auth/AdminRoute';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import Account from '@/pages/Account';
+import AdminLayout from '@/pages/admin/AdminLayout';
+import AdminProducts from '@/pages/admin/AdminProducts';
+import AdminOrders from '@/pages/admin/AdminOrders';
+
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Navbar />
       <main className="flex-grow">
         <Routes>
@@ -24,10 +35,29 @@ function App() {
           <Route path="/packs" element={<Packs />} />
           <Route path="/services" element={<Services />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          
+          {/* Public Auth */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Customer Protected */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/account" element={<Account />} />
+            {/* Any checkout routes would go here */}
+          </Route>
+          
+          {/* Admin Protected */}
+          <Route element={<AdminRoute />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminOrders />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="products" element={<AdminProducts />} />
+            </Route>
+          </Route>
         </Routes>
       </main>
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

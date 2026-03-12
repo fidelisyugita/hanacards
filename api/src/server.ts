@@ -5,6 +5,8 @@ import prismaPlugin from "./plugins/prisma.js";
 import firebasePlugin from "./plugins/firebase.js";
 import { productRoutes } from "./routes/products.js";
 import { orderRoutes } from "./routes/orders.js";
+import { authRoutes } from "./routes/auth.js";
+import { adminRoutes } from "./routes/admin.js";
 
 const app = Fastify({
   logger: {
@@ -32,6 +34,8 @@ async function build() {
   // Routes
   await app.register(productRoutes);
   await app.register(orderRoutes);
+  await app.register(authRoutes);
+  await app.register(adminRoutes);
 
   return app;
 }

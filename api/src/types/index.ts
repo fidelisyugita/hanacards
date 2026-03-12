@@ -3,7 +3,7 @@
 export interface AuthUser {
   uid: string;
   email?: string;
-  isAdmin: boolean;
+  role: "ADMIN" | "CUSTOMER";
 }
 
 export interface CreateProductBody {

@@ -1,11 +1,13 @@
 "use client";
 
 import { Link } from "react-router-dom";
-import { ShoppingBag, Menu } from "lucide-react";
+import { ShoppingBag, Menu, User, ShieldAlert } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const cartCount = useCartStore((state) => state.getCartCount());
+  const { loading, currentUser, dbUser } = useAuth();
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all">
@@ -54,6 +56,36 @@ export default function Navbar() {
 
           {/* Icons */}
           <div className="flex items-center space-x-6">
+            {!loading && (
+              <>
+                {currentUser ? (
+                  dbUser?.role === "ADMIN" ? (
+                    <Link
+                      to="/admin"
+                      className="text-gray-900 hover:text-gray-600 transition-colors flex items-center group"
+                      title="Admin Dashboard"
+                    >
+                      <ShieldAlert className="h-5 w-5 stroke-[1.5]" />
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/account"
+                      className="text-gray-900 hover:text-gray-600 transition-colors flex items-center group"
+                      title="My Account"
+                    >
+                      <User className="h-5 w-5 stroke-[1.5]" />
+                    </Link>
+                  )
+                ) : (
+                  <Link
+                    to="/login"
+                    className="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                  >
+                    Login
+                  </Link>
+                )}
+              </>
+            )}
             <Link
               to="/cart"
               className="relative text-gray-900 hover:text-gray-600 transition-colors flex items-center group"
