@@ -16,23 +16,15 @@ export default function Store() {
           </p>
         </header>
 
-        {/* Categories (Static UI for demo) */}
         <div className="flex flex-wrap justify-center gap-4 py-8 mb-12 border-y border-gray-100">
           <button className="text-sm font-medium text-gray-900 border-b-2 border-gray-900 pb-1 px-2">
             All
           </button>
-          <button className="text-sm font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 px-2 transition-colors">
-            Friendship
-          </button>
-          <button className="text-sm font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 px-2 transition-colors">
-            Love
-          </button>
-          <button className="text-sm font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 px-2 transition-colors">
-            Birthday
-          </button>
-          <button className="text-sm font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 px-2 transition-colors">
-            Packs
-          </button>
+          {["Friendship", "Love", "Birthday", "Anniversary", "Thank You", "Congratulations", "Sympathy", "Packs"].map(cat => (
+            <button key={cat} className="text-sm font-medium text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 px-2 transition-colors">
+              {cat}
+            </button>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">

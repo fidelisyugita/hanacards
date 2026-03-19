@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  category: "Friendship" | "Love" | "Birthday" | "Packs";
+  category: "Friendship" | "Love" | "Birthday" | "Packs" | "Anniversary" | "Thank You" | "Congratulations" | "Sympathy";
   primaryImage: string;
   hoverImage: string;
 }
@@ -68,4 +68,40 @@ export const products: Product[] = [
     primaryImage: "/images/floral_arrangement_1773215445584.png",
     hoverImage: "/images/love_card_1773215401101.png",
   },
+  {
+    id: "p_anniversary_1",
+    name: "Golden Anniversary Card",
+    description: "A high-quality, premium artisanal greeting card for an Anniversary. Minimalist and elegant.",
+    price: 11.5,
+    category: "Anniversary",
+    primaryImage: "/images/anniversary_card_1773906140244.png",
+    hoverImage: "/images/love_card_1773215401101.png",
+  },
+  {
+    id: "p_thankyou_1",
+    name: "Sincere Thank You Card",
+    description: "A minimalist boutique greeting card to express gratitude, featuring elegant typography.",
+    price: 7.5,
+    category: "Thank You",
+    primaryImage: "/images/thank_you_card_1773906169080.png",
+    hoverImage: "/images/floral_arrangement_1773215445584.png",
+  },
+  {
+    id: "p_congrats_1",
+    name: "Foil Congratulations Card",
+    description: "A premium handmade greeting card meant for Congratulations, featuring classy gold foil accents.",
+    price: 14.0,
+    category: "Congratulations",
+    primaryImage: "/images/congrats_card_1773906197827.png",
+    hoverImage: "/images/tabletop_card_scene_1773215431431.png",
+  },
+  {
+    id: "p_sympathy_1",
+    name: "Watercolor Sympathy Card",
+    description: "A tasteful and subtle greeting card meant for sympathy, with soft watercolor florals.",
+    price: 8.5,
+    category: "Sympathy",
+    primaryImage: "/images/sympathy_card_1773906248521.png",
+    hoverImage: "/images/floral_arrangement_1773215445584.png",
+  }
 ];
