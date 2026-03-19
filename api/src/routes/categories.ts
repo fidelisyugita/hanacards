@@ -39,7 +39,7 @@ export const categoriesRoutes: FastifyPluginAsync = async (fastify) => {
         return reply.status(201).send(newCategory);
       } catch (err) {
         if (err instanceof z.ZodError) {
-          return reply.status(400).send({ message: "Validation error", errors: err.errors });
+          return reply.status(400).send({ message: "Validation error", errors: err.issues });
         }
         if ((err as any).code === 'P2002') {
           return reply.status(400).send({ message: "Category with this name already exists" });
@@ -66,7 +66,7 @@ export const categoriesRoutes: FastifyPluginAsync = async (fastify) => {
         return reply.send(updatedCategory);
       } catch (err) {
         if (err instanceof z.ZodError) {
-          return reply.status(400).send({ message: "Validation error", errors: err.errors });
+          return reply.status(400).send({ message: "Validation error", errors: err.issues });
         }
         if ((err as any).code === 'P2025') {
           return reply.status(404).send({ message: "Category not found" });
