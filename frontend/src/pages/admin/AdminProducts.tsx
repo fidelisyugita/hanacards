@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { apiFetch } from "../../lib/api";
 import { Plus } from "lucide-react";
 import { Product } from "../../data/products";
+import ProductModal from "@/components/admin/ProductModal";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // In a real implementation this would use a modal + form
-  // For now, we'll just demonstrate the list
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   useEffect(() => {
     loadProducts();
   }, []);
@@ -21,6 +21,27 @@ export default function AdminProducts() {
       console.error(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAdd = () => {
+    setEditingProduct(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (product: Product) => {
+    setEditingProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this product?")) return;
+    try {
+      await apiFetch(`/products/${id}`, { method: "DELETE" });
+      loadProducts();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete product");
     }
   };
 
@@ -41,7 +62,7 @@ export default function AdminProducts() {
         </div>
         <button
           className="bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center space-x-2"
-          onClick={() => alert("Product creation modal would open here.")}
+          onClick={handleAdd}
         >
           <Plus className="h-4 w-4" />
           <span>Add Product</span>
@@ -93,11 +114,17 @@ export default function AdminProducts() {
                   A${product.price.toFixed(2)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
-                  <button className="text-blue-600 hover:text-blue-900 font-medium">
+                  <button 
+                    onClick={() => handleEdit(product)}
+                    className="text-blue-600 hover:text-blue-900 font-medium"
+                  >
                     Edit
                   </button>
                   <span className="mx-2 text-gray-300">|</span>
-                  <button className="text-red-600 hover:text-red-900 font-medium">
+                  <button 
+                    onClick={() => handleDelete(product.id)}
+                    className="text-red-600 hover:text-red-900 font-medium"
+                  >
                     Delete
                   </button>
                 </td>
@@ -106,6 +133,13 @@ export default function AdminProducts() {
           </tbody>
         </table>
       </div>
+
+      <ProductModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={editingProduct}
+        onSaved={loadProducts}
+      />
     </div>
   );
 }
