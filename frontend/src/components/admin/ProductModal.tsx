@@ -3,6 +3,7 @@ import { X, Loader2 } from "lucide-react";
 import ImageUpload from "@/components/ui/ImageUpload";
 import { Product } from "@/data/products";
 import { apiFetch } from "@/lib/api";
+import { Category } from "./CategoryModal";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -11,12 +12,8 @@ interface ProductModalProps {
   onSaved: () => void;
 }
 
-const CATEGORIES = [
-  "Friendship", "Love", "Birthday", "Packs", 
-  "Anniversary", "Thank You", "Congratulations", "Sympathy"
-];
-
 export default function ProductModal({ isOpen, onClose, product, onSaved }: ProductModalProps) {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -54,6 +51,14 @@ export default function ProductModal({ isOpen, onClose, product, onSaved }: Prod
     }
     setError("");
   }, [product, isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      apiFetch<Category[]>("/categories")
+        .then(data => setCategories(data))
+        .catch(err => console.error("Failed to fetch categories", err));
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -177,7 +182,8 @@ export default function ProductModal({ isOpen, onClose, product, onSaved }: Prod
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-gray-900 focus:ring-gray-900 sm:text-sm p-2 border bg-white"
               >
-                {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                <option value="" disabled>Select a category...</option>
+                {categories.map(cat => <option key={cat.id} value={cat.name}>{cat.name}</option>)}
               </select>
             </div>
 

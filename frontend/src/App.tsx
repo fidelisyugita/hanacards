@@ -21,6 +21,7 @@ import Account from '@/pages/Account';
 import AdminLayout from '@/pages/admin/AdminLayout';
 import AdminProducts from '@/pages/admin/AdminProducts';
 import AdminOrders from '@/pages/admin/AdminOrders';
+import AdminCategories from '@/pages/admin/AdminCategories';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
               <Route index element={<AdminOrders />} />
               <Route path="orders" element={<AdminOrders />} />
               <Route path="products" element={<AdminProducts />} />
+              <Route path="categories" element={<AdminCategories />} />
             </Route>
           </Route>
         </Routes>

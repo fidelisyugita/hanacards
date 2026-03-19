@@ -7,6 +7,7 @@ import { productRoutes } from "./routes/products.js";
 import { orderRoutes } from "./routes/orders.js";
 import { authRoutes } from "./routes/auth.js";
 import { adminRoutes } from "./routes/admin.js";
+import { categoriesRoutes } from "./routes/categories.js";
 
 const app = Fastify({
   logger: {
@@ -36,6 +37,7 @@ async function build() {
   await app.register(orderRoutes);
   await app.register(authRoutes);
   await app.register(adminRoutes);
+  await app.register(categoriesRoutes);
 
   return app;
 }

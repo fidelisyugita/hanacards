@@ -6,7 +6,7 @@ const createProductSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
   price: z.number().positive(),
-  category: z.enum(["Friendship", "Love", "Birthday", "Packs", "Anniversary", "Thank You", "Congratulations", "Sympathy"]),
+  category: z.string().min(1),
   primaryImage: z.string().min(1),
   hoverImage: z.string().min(1),
   stock: z.number().int().nonnegative().default(0),
