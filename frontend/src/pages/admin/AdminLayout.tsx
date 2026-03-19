@@ -1,14 +1,26 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
-import { Package, ShoppingCart } from "lucide-react";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
+import { Package, ShoppingCart, LogOut } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AdminLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to log out", error);
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-gray-50 pt-16">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-100 hidden md:flex flex-col">
-        <div className="p-6">
+        <div className="p-6 flex-grow">
           <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-6">
             Admin Dashboard
           </h2>
@@ -35,6 +47,17 @@ export default function AdminLayout() {
               <Package className="h-4 w-4" />
               <span>Products</span>
             </Link>
+
+            
+            <div className="pt-4 mt-4 border-t border-gray-100">
+              <button
+                onClick={handleLogout}
+                className="flex w-full items-center justify-start space-x-3 px-4 py-3 rounded-md transition-colors text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Logout</span>
+              </button>
+            </div>
           </nav>
         </div>
       </aside>

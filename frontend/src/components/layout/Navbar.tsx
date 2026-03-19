@@ -59,15 +59,16 @@ export default function Navbar() {
             {!loading && (
               <>
                 {currentUser ? (
-                  dbUser?.role === "ADMIN" ? (
-                    <Link
-                      to="/admin"
-                      className="text-gray-900 hover:text-gray-600 transition-colors flex items-center group"
-                      title="Admin Dashboard"
-                    >
-                      <ShieldAlert className="h-5 w-5 stroke-[1.5]" />
-                    </Link>
-                  ) : (
+                  <>
+                    {dbUser?.role === "ADMIN" && (
+                      <Link
+                        to="/admin"
+                        className="text-gray-900 hover:text-gray-600 transition-colors flex items-center group"
+                        title="Admin Dashboard"
+                      >
+                        <ShieldAlert className="h-5 w-5 stroke-[1.5]" />
+                      </Link>
+                    )}
                     <Link
                       to="/account"
                       className="text-gray-900 hover:text-gray-600 transition-colors flex items-center group"
@@ -75,7 +76,7 @@ export default function Navbar() {
                     >
                       <User className="h-5 w-5 stroke-[1.5]" />
                     </Link>
-                  )
+                  </>
                 ) : (
                   <Link
                     to="/login"
